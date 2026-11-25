@@ -4,7 +4,7 @@
 
 ## Two engagements
 
-For the county education office, explore the supplied 1,200-student synthetic cohort, identify support signals and distinguish association from causation. For Duka Electronics, turn the 1,000 synthetic H1 2026 orders into an executive visual story, a chart makeover and prepared dashboard data.
+For the county education office, explore the supplied 1,200-student synthetic cohort, identify support signals and distinguish association from causation. For Duka Electronics, turn the 1,000 synthetic H1 2026 orders into an executive visual story, a chart makeover and a public interactive dashboard.
 
 ## How to run
 
@@ -21,7 +21,7 @@ Open **student_eda.ipynb**, restart its kernel and run all cells; then do the sa
 - board_report.ipynb: storyboard before plotting, before/after makeover and every chart in the five-panel report.
 - reports/duka_board_report.png: one-page report with insight titles, units, source and incomplete-period caveat.
 - outputs/duka_dashboard_data.csv: 1,000 ISO-dated orders with numeric revenue for a real Looker Studio data source.
-- dashboard.md: publication status, exact dashboard specification and filter-validation targets.
+- dashboard.md: public dashboard link, two authentic screenshots, field definitions and successful filter tests.
 - peer_feedback.md: peer-review requirements still awaiting the user’s cohort posts.
 
 ## Five key EDA insights
@@ -46,4 +46,6 @@ Average scores are not rounded before banding: At Risk <60; Meeting [60,75); Exc
 
 The Duka dataset ends on **29 June**, so Q2 is incomplete; compare equal date coverage before interpreting quarter changes. Revenue is not profit. Charts show generated synthetic orders, not actual Duka operational records.
 
-**Not yet complete:** the public Looker Studio report URL, two authentic dashboard screenshots, a cohort-channel report post and written feedback on two actual peers’ reports. dashboard.md and peer_feedback.md record these outstanding items without inventing evidence. Do not treat the repository as a completed assignment until these requirements are satisfied.
+[Open the public interactive dashboard](https://datastudio.google.com/reporting/6dd044ad-f81e-48ff-a360-67ad0bed26a0/page/t4IEG). See [dashboard.md](dashboard.md) for authentic overview/Online screenshots and validated channel/date filter results.
+
+**User participation still required:** post the one-page report in your cohort channel and give written feedback on two actual peers’ reports. Record genuine links and feedback in peer_feedback.md; these actions have not been completed on your behalf.

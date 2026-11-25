@@ -1,41 +1,40 @@
 # Duka live dashboard
 
-## Status
+[Open the public Looker Studio / Data Studio dashboard](https://datastudio.google.com/reporting/6dd044ad-f81e-48ff-a360-67ad0bed26a0/page/t4IEG)
 
-**Pending Google sign-in and dashboard creation.** No public Looker Studio URL or authentic screenshots are available yet. The static board report is not a substitute for this required interactive report. Do not submit a fabricated link or treat the static chart images as dashboard screenshots.
+Sharing was saved and checked as **Public — Viewer: anyone on the internet with the link can find and view**. The report contains three scorecards, a monthly revenue trend, sorted branch and product charts, a date-range control and a channel drop-down.
 
-## Prepared data
+## Data source and calculations
 
-Import `outputs/duka_dashboard_data.csv` into Google Sheets, then connect that sheet to Looker Studio. `order_date` must be a Date (exported as YYYY-MM-DD); revenue, quantity and unit_price must be numeric. `order_id` is an identifier used for Count Distinct. Refresh the connected sheet if regenerated data changes.
+The report uses the native CSV upload connector with `outputs/duka_dashboard_data.csv` (1,000 synthetic orders, seed 2026). This is an uploaded snapshot; regenerate and replace the upload when the input changes. It does not refresh from Google Sheets.
 
-## Layout and field definitions
+- `Order Date = PARSE_DATE("%Y-%m-%d", order_date)` gives a real Date field; every chart uses it as its date-range dimension.
+- Revenue: `SUM(revenue)` in KES.
+- Orders: `COUNT_DISTINCT(order_id)`.
+- Average order value (AOV): `SUM(revenue) / COUNT_DISTINCT(order_id)` in KES.
+- Trend dimension: Order Date at Year Month granularity.
+- Branch and product bars: descending total revenue, with zero baselines.
 
-| Element | Dimension | Metric / formula |
-|---|---|---|
-| Revenue scorecard | None | SUM(revenue) |
-| Orders scorecard | None | COUNT_DISTINCT(order_id) |
-| Average order value scorecard | None | SUM(revenue) / COUNT_DISTINCT(order_id) |
-| Monthly trend | order_date with Month granularity | SUM(revenue) |
-| Branch sorted bar | branch | SUM(revenue), descending |
-| Product sorted bar | product | SUM(revenue), descending |
-| Date-range control | order_date | Apply to every scorecard/chart |
-| Channel drop-down | channel | Apply to every scorecard/chart |
+Source and units are printed on the dashboard. H1 reference titles describe the complete input period and remain reference figures when filters are applied. June/Q2 is incomplete because the input ends on 29 June 2026. Branch bars use PLP redberry (#8E0000); product bars use neutral grey.
 
-Use grey for context, PLP redberry #8E0000 for the key highlight and #0BA184 sparingly as accent. Keep units in KES, use a zero baseline on bars, direct labels where readable and a source line: “Duka generator, seed 2026; synthetic orders; 1 January–29 June 2026”. Titles referring to fixed H1 findings should be labelled “H1 reference” or rewritten as filter-aware question titles, so filtering does not make a static insight false.
+## Filter validation
 
-## Validation targets
+| State | Revenue (KES) | Distinct orders | AOV (KES) |
+|---|---:|---:|---:|
+| All H1 data | 71,792,500 | 1,000 | 71,792.50 |
+| Online only | 22,786,100 | 320 | 71,206.56 |
+| 1–31 January 2026, all channels | 11,786,600 | 173 | 68,130.64 |
 
-- Unfiltered H1: KES 71,792,500 revenue, 1,000 distinct orders, KES 71,792.50 average order value.
-- Online filter: KES 22,786,100 revenue, 320 distinct orders, KES 71,206.5625 average order value.
-- Confirm that changing channel and date range updates all scorecards and all three charts.
-- Confirm date data types, mobile legibility and no duplicated orders.
+Both controls were tested in the live viewer. Each changed all three scorecards and all three charts; the January trend reduced to one monthly point, and the branch and product scales changed. Reset restored the full H1 totals. Values match the notebook/export; displayed AOV is rounded to two decimals where necessary.
 
-## Evidence to add after publishing
+## Authentic dashboard screenshots
 
-1. Set viewer access to anyone with the link and verify the report opens as a viewer.
-2. Add the actual public report URL here.
-3. Save `figures/dashboard_overview.png`, an authentic screenshot showing scorecards, monthly trend, breakdowns and controls.
-4. Save `figures/dashboard_filtered.png`, showing the Online-filtered state and its changed metrics.
-5. Embed those screenshots here using Markdown image references and record the filter test result.
+Full H1 overview, including scorecards, trend, breakdowns and filter controls:
 
-These are outstanding requirements, not completed actions.
+![Live dashboard overview](figures/dashboard_overview.jpg)
+
+Online channel selected, showing changed scorecards, trend and branch/product distributions:
+
+![Live dashboard filtered to Online](figures/dashboard_filtered.jpg)
+
+These screenshots were captured from the live report viewer, rather than rendered from notebook charts.
